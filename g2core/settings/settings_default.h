@@ -110,7 +110,7 @@
 #endif
 
 #ifndef SPINDLE_SPEED_MAX
-#define SPINDLE_SPEED_MAX     1000000.0     // {spsm:
+#define SPINDLE_SPEED_MAX     24000.0     // {spsm:
 #endif
 
 #ifndef COOLANT_MIST_POLARITY
@@ -196,7 +196,7 @@
 // *** Gcode Startup Defaults *** //
 
 #ifndef GCODE_DEFAULT_UNITS
-#define GCODE_DEFAULT_UNITS         MILLIMETERS             // {gun: MILLIMETERS or INCHES
+#define GCODE_DEFAULT_UNITS         INCHES             // {gun: MILLIMETERS or INCHES
 #endif
 
 #ifndef GCODE_DEFAULT_PLANE
@@ -219,16 +219,17 @@
 //*****************************************************************************
 //*** Motor Settings **********************************************************
 //*****************************************************************************
-
+#define MOTOR_POWER_MODE            MOTOR_POWERED_IN_CYCLE  // default motor power mode (see cmMotorPowerMode in 
+#define MOTOR_POWER_TIMEOUT         2.00  
 // MOTOR 1
 #ifndef M1_MOTOR_MAP
-#define M1_MOTOR_MAP                AXIS_X_EXTERNAL         // {1ma: AXIS_X, AXIS_Y...
+#define M1_MOTOR_MAP                AXIS_X         // {1ma: AXIS_X, AXIS_Y...
 #endif
 #ifndef M1_STEP_ANGLE
 #define M1_STEP_ANGLE               1.8                     // {1sa: degrees per step
 #endif
 #ifndef M1_TRAVEL_PER_REV
-#define M1_TRAVEL_PER_REV           1.25                    // {1tr:  1.25 is a typical value for a screw axis
+#define M1_TRAVEL_PER_REV           40.0                    // {1tr:  1.25 is a typical value for a screw axis
 #endif
 #ifndef M1_MICROSTEPS
 #define M1_MICROSTEPS               8                       // {1mi:  1,2,4,8,    16,32 (G2 ONLY)
@@ -246,10 +247,10 @@
 #define M1_STEP_POLARITY            IO_ACTIVE_HIGH          // {1ps:  IO_ACTIVE_LOW or IO_ACTIVE_HIGH
 #endif
 #ifndef M1_POWER_MODE
-#define M1_POWER_MODE               MOTOR_DISABLED          // {1pm:  MOTOR_DISABLED, MOTOR_ALWAYS_POWERED, MOTOR_POWERED_IN_CYCLE, MOTOR_POWERED_ONLY_WHEN_MOVING
+#define M1_POWER_MODE               MOTOR_POWER_MODE          // {1pm:  MOTOR_DISABLED, MOTOR_ALWAYS_POWERED, MOTOR_POWERED_IN_CYCLE, MOTOR_POWERED_ONLY_WHEN_MOVING
 #endif
 #ifndef M1_POWER_LEVEL
-#define M1_POWER_LEVEL              0.0                     // {1pl:   0.0=no power, 1.0=max power
+#define M1_POWER_LEVEL              0.500                    // {1pl:   0.0=no power, 1.0=max power
 #endif
 
 // MOTOR 2
@@ -278,21 +279,21 @@
 #define M2_STEP_POLARITY            IO_ACTIVE_HIGH
 #endif
 #ifndef M2_POWER_MODE
-#define M2_POWER_MODE               MOTOR_DISABLED
+#define M2_POWER_MODE               MOTOR_POWER_MODE
 #endif
 #ifndef M2_POWER_LEVEL
-#define M2_POWER_LEVEL              0.0
+#define M2_POWER_LEVEL              0.5
 #endif
 
 // MOTOR 3
 #ifndef M3_MOTOR_MAP
-#define M3_MOTOR_MAP                AXIS_Z_EXTERNAL
+#define M3_MOTOR_MAP                AXIS_Y_EXTERNAL
 #endif
 #ifndef M3_STEP_ANGLE
 #define M3_STEP_ANGLE               1.8
 #endif
 #ifndef M3_TRAVEL_PER_REV
-#define M3_TRAVEL_PER_REV           1.25                    // 1.25 is a typical value for a screw axis
+#define M3_TRAVEL_PER_REV           40.0                   // 1.25 is a typical value for a screw axis
 #endif
 #ifndef M3_MICROSTEPS
 #define M3_MICROSTEPS               8
@@ -301,7 +302,7 @@
 #define M3_STEPS_PER_UNIT           0
 #endif
 #ifndef M3_POLARITY
-#define M3_POLARITY                 0
+#define M3_POLARITY                 1
 #endif
 #ifndef M3_ENABLE_POLARITY
 #define M3_ENABLE_POLARITY          IO_ACTIVE_LOW
@@ -310,21 +311,21 @@
 #define M3_STEP_POLARITY            IO_ACTIVE_HIGH
 #endif
 #ifndef M3_POWER_MODE
-#define M3_POWER_MODE               MOTOR_DISABLED
+#define M3_POWER_MODE               MOTOR_POWER_MODE
 #endif
 #ifndef M3_POWER_LEVEL
-#define M3_POWER_LEVEL              0.0
+#define M3_POWER_LEVEL              0.5
 #endif
 
 // MOTOR 4
 #ifndef M4_MOTOR_MAP
-#define M4_MOTOR_MAP                AXIS_A_EXTERNAL
+#define M4_MOTOR_MAP                AXIS_Z_EXTERNAL
 #endif
 #ifndef M4_STEP_ANGLE
 #define M4_STEP_ANGLE               1.8
 #endif
 #ifndef M4_TRAVEL_PER_REV
-#define M4_TRAVEL_PER_REV           360.0                   // in degrees if rotary axis (ABC)
+#define M4_TRAVEL_PER_REV           1.25                 // in degrees if rotary axis (ABC)
 #endif
 #ifndef M4_MICROSTEPS
 #define M4_MICROSTEPS               8
@@ -342,10 +343,10 @@
 #define M4_STEP_POLARITY            IO_ACTIVE_HIGH
 #endif
 #ifndef M4_POWER_MODE
-#define M4_POWER_MODE               MOTOR_DISABLED
+#define M4_POWER_MODE               MOTOR_POWER_MODE
 #endif
 #ifndef M4_POWER_LEVEL
-#define M4_POWER_LEVEL              0.0
+#define M4_POWER_LEVEL              0.75
 #endif
 
 // MOTOR 5
@@ -415,37 +416,37 @@
 //*****************************************************************************
 //*** Axis Settings ***********************************************************
 //*****************************************************************************
-
+#define JERK_MAX                    5000
 // X AXIS
 #ifndef X_AXIS_MODE
-#define X_AXIS_MODE                 AXIS_DISABLED           // {xam:  see canonical_machine.h cmAxisMode for valid values
+#define X_AXIS_MODE                 AXIS_STANDARD         // {xam:  see canonical_machine.h cmAxisMode for valid values
 #endif
 #ifndef X_VELOCITY_MAX
-#define X_VELOCITY_MAX              1000.0                  // {xvm:  G0 max velocity in mm/min
+#define X_VELOCITY_MAX              50000.0                  // {xvm:  G0 max velocity in mm/min
 #endif
 #ifndef X_FEEDRATE_MAX
-#define X_FEEDRATE_MAX              1000.0                  // {xfr:  G1 max feed rate in mm/min
+#define X_FEEDRATE_MAX              X_VELOCITY_MAX                 // {xfr:  G1 max feed rate in mm/min
 #endif
 #ifndef X_TRAVEL_MIN
 #define X_TRAVEL_MIN                0.0                     // {xtn:  minimum travel for soft limits
 #endif
 #ifndef X_TRAVEL_MAX
-#define X_TRAVEL_MAX                0.0                     // {xtm:  travel between switches or crashes
+#define X_TRAVEL_MAX                420.0                     // {xtm:  travel between switches or crashes
 #endif
 #ifndef X_JERK_MAX
-#define X_JERK_MAX                  1000.0                  // {xjm:
+#define X_JERK_MAX                  JERK_MAX                  // {xjm:
 #endif
 #ifndef X_JERK_HIGH_SPEED
-#define X_JERK_HIGH_SPEED           1000.0                  // {xjh:
+#define X_JERK_HIGH_SPEED           20000.0                  // {xjh:
 #endif
 #ifndef X_HOMING_INPUT
-#define X_HOMING_INPUT              0                       // {xhi:  input used for homing or 0 to disable
+#define X_HOMING_INPUT              1                       // {xhi:  input used for homing or 0 to disable
 #endif
 #ifndef X_HOMING_DIRECTION
 #define X_HOMING_DIRECTION          0                       // {xhd:  0=search moves negative, 1= search moves positive
 #endif
 #ifndef X_SEARCH_VELOCITY
-#define X_SEARCH_VELOCITY           500.0                   // {xsv:  minus means move to minimum switch
+#define X_SEARCH_VELOCITY           3000.0                   // {xsv:  minus means move to minimum switch
 #endif
 #ifndef X_LATCH_VELOCITY
 #define X_LATCH_VELOCITY            100.0                   // {xlv:  mm/min
@@ -459,34 +460,34 @@
 
 // Y AXIS
 #ifndef Y_AXIS_MODE
-#define Y_AXIS_MODE                 AXIS_DISABLED
+#define Y_AXIS_MODE                 AXIS_STANDARD
 #endif
 #ifndef Y_VELOCITY_MAX
-#define Y_VELOCITY_MAX              1000.0
+#define Y_VELOCITY_MAX              50000.0
 #endif
 #ifndef Y_FEEDRATE_MAX
-#define Y_FEEDRATE_MAX              1000.0
+#define Y_FEEDRATE_MAX              Y_VELOCITY_MAX
 #endif
 #ifndef Y_TRAVEL_MIN
 #define Y_TRAVEL_MIN                0.0
 #endif
 #ifndef Y_TRAVEL_MAX
-#define Y_TRAVEL_MAX                0.0
+#define Y_TRAVEL_MAX                420.0
 #endif
 #ifndef Y_JERK_MAX
-#define Y_JERK_MAX                  1000.0
+#define Y_JERK_MAX                  JERK_MAX
 #endif
 #ifndef Y_JERK_HIGH_SPEED
-#define Y_JERK_HIGH_SPEED           1000.0
+#define Y_JERK_HIGH_SPEED           20000.0
 #endif
 #ifndef Y_HOMING_INPUT
-#define Y_HOMING_INPUT              0
+#define Y_HOMING_INPUT              3
 #endif
 #ifndef Y_HOMING_DIRECTION
 #define Y_HOMING_DIRECTION          0
 #endif
 #ifndef Y_SEARCH_VELOCITY
-#define Y_SEARCH_VELOCITY           500.0
+#define Y_SEARCH_VELOCITY           3000.0
 #endif
 #ifndef Y_LATCH_VELOCITY
 #define Y_LATCH_VELOCITY            100.0
@@ -500,34 +501,34 @@
 
 // Z AXIS
 #ifndef Z_AXIS_MODE
-#define Z_AXIS_MODE                 AXIS_DISABLED
+#define Z_AXIS_MODE                 AXIS_STANDARD
 #endif
 #ifndef Z_VELOCITY_MAX
-#define Z_VELOCITY_MAX              1000.0
+#define Z_VELOCITY_MAX              1200.0
 #endif
 #ifndef Z_FEEDRATE_MAX
-#define Z_FEEDRATE_MAX              1000.0
+#define Z_FEEDRATE_MAX              Z_VELOCITY_MAX
 #endif
 #ifndef Z_TRAVEL_MAX
 #define Z_TRAVEL_MAX                0.0
 #endif
 #ifndef Z_TRAVEL_MIN
-#define Z_TRAVEL_MIN                0.0
+#define Z_TRAVEL_MIN                -95
 #endif
 #ifndef Z_JERK_MAX
 #define Z_JERK_MAX                  500.0
 #endif
 #ifndef Z_JERK_HIGH_SPEED
-#define Z_JERK_HIGH_SPEED           500.0
+#define Z_JERK_HIGH_SPEED           1000.0
 #endif
 #ifndef Z_HOMING_INPUT
-#define Z_HOMING_INPUT              0
+#define Z_HOMING_INPUT              6
 #endif
 #ifndef Z_HOMING_DIRECTION
-#define Z_HOMING_DIRECTION          0
+#define Z_HOMING_DIRECTION          1
 #endif
 #ifndef Z_SEARCH_VELOCITY
-#define Z_SEARCH_VELOCITY           250.0
+#define Z_SEARCH_VELOCITY           (Z_VELOCITY_MAX * 0.66666)
 #endif
 #ifndef Z_LATCH_VELOCITY
 #define Z_LATCH_VELOCITY            25.0
@@ -541,43 +542,43 @@
 
 // U AXIS
 #ifndef U_AXIS_MODE
-#define U_AXIS_MODE                 AXIS_DISABLED           // {xam:  see canonical_machine.h cmAxisMode for valid values
+#define U_AXIS_MODE                 AXIS_STANDARD           // {xam:  see canonical_machine.h cmAxisMode for valid values
 #endif
 #ifndef U_VELOCITY_MAX
-#define U_VELOCITY_MAX              1000.0                  // {xvm:  G0 max velocity in mm/min
+#define U_VELOCITY_MAX              X_VELOCITY_MAX                  // {xvm:  G0 max velocity in mm/min
 #endif
 #ifndef U_FEEDRATE_MAX
-#define U_FEEDRATE_MAX              1000.0                  // {xfr:  G1 max feed rate in mm/min
+#define U_FEEDRATE_MAX              X_FEEDRATE_MAX                  // {xfr:  G1 max feed rate in mm/min
 #endif
 #ifndef U_TRAVEL_MIN
-#define U_TRAVEL_MIN                0.0                     // {xtn:  minimum travel for soft limits
+#define U_TRAVEL_MIN                X_TRAVEL_MIN                     // {xtn:  minimum travel for soft limits
 #endif
 #ifndef U_TRAVEL_MAX
-#define U_TRAVEL_MAX                0.0                     // {xtm:  travel between switches or crashes
+#define U_TRAVEL_MAX                X_TRAVEL_MAX                     // {xtm:  travel between switches or crashes
 #endif
 #ifndef U_JERK_MAX
-#define U_JERK_MAX                  1000.0                  // {xjm:
+#define U_JERK_MAX                  X_JERK_MAX                  // {xjm:
 #endif
 #ifndef U_JERK_HIGH_SPEED
-#define U_JERK_HIGH_SPEED           1000.0                  // {xjh:
+#define U_JERK_HIGH_SPEED           X_JERK_HIGH_SPEED                  // {xjh:
 #endif
 #ifndef U_HOMING_INPUT
-#define U_HOMING_INPUT              0                       // {xhi:  input used for homing or 0 to disable
+#define U_HOMING_INPUT              X_HOMING_INPUT                       // {xhi:  input used for homing or 0 to disable
 #endif
 #ifndef U_HOMING_DIRECTION
-#define U_HOMING_DIRECTION          0                       // {xhd:  0=search moves negative, 1= search moves positive
+#define U_HOMING_DIRECTION          X_HOMING_DIRECTION                       // {xhd:  0=search moves negative, 1= search moves positive
 #endif
 #ifndef U_SEARCH_VELOCITY
-#define U_SEARCH_VELOCITY           500.0                   // {xsv:  minus means move to minimum switch
+#define U_SEARCH_VELOCITY           X_SEARCH_VELOCITY                   // {xsv:  minus means move to minimum switch
 #endif
 #ifndef U_LATCH_VELOCITY
-#define U_LATCH_VELOCITY            100.0                   // {xlv:  mm/min
+#define U_LATCH_VELOCITY            X_LATCH_VELOCITY                   // {xlv:  mm/min
 #endif
 #ifndef U_LATCH_BACKOFF
-#define U_LATCH_BACKOFF             4.0                     // {xlb:  mm
+#define U_LATCH_BACKOFF             X_LATCH_BACKOFF                     // {xlb:  mm
 #endif
 #ifndef U_ZERO_BACKOFF
-#define U_ZERO_BACKOFF              2.0                     // {xzb:  mm
+#define U_ZERO_BACKOFF              X_ZERO_BACKOFF                     // {xzb:  mm
 #endif
 
 // V AXIS
@@ -696,7 +697,7 @@
 
 // A AXIS
 #ifndef A_AXIS_MODE
-#define A_AXIS_MODE                 AXIS_DISABLED
+#define A_AXIS_MODE                 AXIS_STANDARD
 #endif
 #ifndef A_RADIUS
 #define A_RADIUS                    (M4_TRAVEL_PER_REV/(2*3.14159628))
@@ -1046,31 +1047,31 @@
 #define P1_PWM_FREQUENCY            100                   // in Hz
 #endif
 #ifndef P1_CW_SPEED_LO
-#define P1_CW_SPEED_LO              7900                  // in RPM (arbitrary units)
+#define P1_CW_SPEED_LO              0                  // in RPM (arbitrary units)
 #endif
 #ifndef P1_CW_SPEED_HI
-#define P1_CW_SPEED_HI              12800
+#define P1_CW_SPEED_HI              24000
 #endif
 #ifndef P1_CW_PHASE_LO
-#define P1_CW_PHASE_LO              0.13                    // phase [0..1]
+#define P1_CW_PHASE_LO              0.0                    // phase [0..1]
 #endif
 #ifndef P1_CW_PHASE_HI
-#define P1_CW_PHASE_HI              0.17
+#define P1_CW_PHASE_HI              1.0
 #endif
 #ifndef P1_CCW_SPEED_LO
-#define P1_CCW_SPEED_LO             7900    // 0.0
+#define P1_CCW_SPEED_LO             0    // 0.0
 #endif
 #ifndef P1_CCW_SPEED_HI
-#define P1_CCW_SPEED_HI            12800    // 0.0
+#define P1_CCW_SPEED_HI            24000    // 0.0
 #endif
 #ifndef P1_CCW_PHASE_LO
-#define P1_CCW_PHASE_LO             0.13    // 0.1
+#define P1_CCW_PHASE_LO             0    // 0.1
 #endif
 #ifndef P1_CCW_PHASE_HI
-#define P1_CCW_PHASE_HI             0.17    // 0.1
+#define P1_CCW_PHASE_HI             1.0    // 0.1
 #endif
 #ifndef P1_PWM_PHASE_OFF
-#define P1_PWM_PHASE_OFF            0.1
+#define P1_PWM_PHASE_OFF            0
 #endif
 
 // *** Heater Settings - relevant to 3dp machines *** //
